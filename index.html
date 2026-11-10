@@ -55,6 +55,18 @@ button,input,textarea{font:inherit;color:inherit}
 .stage-card .eyebrow{font-family:var(--f-caps);letter-spacing:.32em;font-size:13px;color:var(--gold-lt)}
 .stage-card h1{font-family:var(--f-script);font-weight:400;font-size:clamp(64px,20vw,96px);line-height:1;margin:0;color:#fff4e0;text-shadow:0 0 28px rgba(233,205,138,.45)}
 .stage-card p{margin:0;font-style:italic;opacity:.9}
+.para{display:grid;gap:2px;justify-items:center;margin-top:4px;padding:10px 22px;border-top:1px solid rgba(233,205,138,.35);border-bottom:1px solid rgba(233,205,138,.35)}
+.para small{font-family:var(--f-caps);letter-spacing:.3em;font-size:11px;color:var(--gold-lt)}
+.para b{font-family:var(--f-body);font-style:italic;font-weight:500;font-size:24px;color:#fff4e0;line-height:1.25;text-wrap:balance}
+.para-card{text-align:center;margin:0 0 14px;padding:14px 12px;border:1px solid rgba(176,131,47,.45);border-radius:12px;background:var(--paper)}
+.para-card small{display:block;font-family:var(--f-caps);letter-spacing:.26em;font-size:11px;color:var(--gold)}
+.para-card b{display:block;font-style:italic;font-weight:500;font-size:24px;color:var(--plum);text-wrap:balance}
+.para-card span{font-size:15px;color:var(--plum-soft);font-style:italic}
+.note{font-size:15px;font-style:italic;color:var(--plum-soft);margin:0}
+.stepper{display:flex;align-items:center;gap:16px}
+.stepper output{font-family:var(--f-caps);font-size:28px;min-width:40px;text-align:center;font-variant-numeric:tabular-nums}
+.stepper .icon-btn{width:48px;height:48px;font-size:22px;color:var(--plum)}
+.linkbox{border:1px dashed var(--gold);border-radius:10px;background:#fff;padding:10px 12px;font-size:14px;overflow-wrap:anywhere;color:var(--plum-soft)}
 .btn-open{margin-top:10px;border:1px solid var(--gold-lt);background:rgba(233,205,138,.12);color:#fff4e0;
   font-family:var(--f-caps);letter-spacing:.18em;font-size:14px;padding:16px 28px;border-radius:999px;cursor:pointer;
   box-shadow:0 0 0 6px rgba(233,205,138,.08),0 0 36px rgba(233,205,138,.25);animation:pulse 2.6s ease-in-out infinite}
@@ -202,6 +214,7 @@ textarea.inp{min-height:90px;resize:vertical}
     <div class="eyebrow">VOCÊ RECEBEU UM CONVITE</div>
     <h1>Talita</h1>
     <p>Meus 15 anos · 16 de janeiro</p>
+    <div class="para" id="paraIntro" hidden><small>PREPARADO ESPECIALMENTE PARA</small><b id="paraIntroNames"></b></div>
     <button class="btn-open" id="btnOpen">ABRIR CONVITE</button>
     <p style="font-size:14px;opacity:.7">Ative o som do celular ✨</p>
   </div>
@@ -212,6 +225,7 @@ textarea.inp{min-height:90px;resize:vertical}
 <!-- ===== guest views ===== -->
 <main class="wrap" id="guest" hidden>
   <section id="vCard">
+    <div class="para-card" id="paraCard" hidden><small>CONVITE ESPECIAL PARA</small><b id="paraCardNames"></b><span id="paraCardMax"></span></div>
     <img class="card-img" src="convite.jpg" alt="Convite: Meus 15 anos, Talita. 16 de janeiro às 19h30, Cerimonial Tindolelê, Av. Saturnino Rangel Mauro, 621, Praia de Itaparica, Vila Velha/ES." width="1024" height="1536">
     <div class="actions">
       <button class="btn primary" id="goForm">CONFIRMAR PRESENÇA</button>
@@ -249,6 +263,7 @@ textarea.inp{min-height:90px;resize:vertical}
           <span class="lbl">QUEM VAI COM VOCÊ?</span>
           <div class="comp" id="compList"></div>
           <button type="button" class="add" id="addComp">+ Adicionar acompanhante</button>
+          <p class="note" id="limitNote" hidden></p>
         </div>
         <label class="f"><span class="lbl">RECADO PARA A TALITA <span style="letter-spacing:0;font-family:var(--f-body);font-style:italic">(opcional)</span></span>
           <textarea class="inp" id="fRec" maxlength="600" placeholder="Deixe uma palavra de carinho…"></textarea></label>
@@ -311,10 +326,38 @@ textarea.inp{min-height:90px;resize:vertical}
       <button class="btn" id="btnPdf">EXPORTAR PDF</button>
     </div>
     <div class="fab-row" style="grid-template-columns:1fr">
+      <button class="btn primary" id="btnInvite">CRIAR CONVITE PERSONALIZADO</button>
       <button class="btn ghost" id="btnCopy">COPIAR LISTA PARA O WHATSAPP</button>
     </div>
   </section>
 </main>
+
+<!-- personalized invite modal -->
+<div class="modal" id="invModal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="iTitle">
+    <div class="sheet-head"><div class="caps">CONVITE PERSONALIZADO</div><h2 id="iTitle" style="font-size:40px">Para quem?</h2>
+      <p>Ela recebe o convite com o nome dela e só consegue cadastrar os acompanhantes que você liberar</p></div>
+    <form id="invForm" novalidate>
+      <label class="f"><span class="lbl">NOME DO CONVIDADO</span>
+        <input class="inp" id="iNome" maxlength="80" placeholder="Ex.: Elton"></label>
+      <div class="f"><span class="lbl">ACOMPANHANTES PERMITIDOS</span>
+        <div class="stepper"><button type="button" class="icon-btn" id="iMenos" aria-label="Menos">−</button>
+          <output id="iAcomp">0</output>
+          <button type="button" class="icon-btn" id="iMais" aria-label="Mais">+</button></div>
+        <p class="note" id="iResumo"></p></div>
+      <label class="f"><span class="lbl">WHATSAPP DO CONVIDADO</span>
+        <input class="inp" id="iTel" inputmode="tel" maxlength="16" placeholder="(27) 99999-9999"></label>
+      <p class="err" id="iErr" hidden></p>
+      <button class="btn primary" type="submit">ENVIAR CONVITE PELO WHATSAPP</button>
+      <div id="iOut" hidden style="display:grid;gap:10px">
+        <p class="note" id="iOutTxt"></p>
+        <a class="btn" id="iWa" target="_blank" rel="noopener" href="#">ABRIR O WHATSAPP DE NOVO</a>
+        <button type="button" class="btn ghost" id="iCopy">COPIAR MENSAGEM COM O LINK</button>
+      </div>
+      <button type="button" class="back" id="iClose">Fechar</button>
+    </form>
+  </div>
+</div>
 
 <!-- edit modal -->
 <div class="modal" id="modal" hidden>
@@ -365,7 +408,7 @@ function maskTel(v){
 const fmtData = iso => new Date(iso).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
 
 /* ---------- companion list widget (shared by guest form and edit modal) ---------- */
-function compWidget(listEl, addBtn, onChange){
+function compWidget(listEl, addBtn, onChange, maxFn=()=>15){
   function row(val=""){
     const r=document.createElement("div"); r.className="comp-row";
     r.innerHTML=`<span class="n"></span><input class="inp" maxlength="120" placeholder="Nome do acompanhante"><button type="button" class="icon-btn" aria-label="Remover">✕</button>`;
@@ -374,13 +417,36 @@ function compWidget(listEl, addBtn, onChange){
     r.querySelector("button").onclick=()=>{ r.remove(); renum(); onChange(); };
     listEl.appendChild(r); renum(); return r;
   }
-  function renum(){ [...listEl.children].forEach((r,i)=>r.querySelector(".n").textContent=i+1); addBtn.hidden = listEl.children.length>=15; }
+  function renum(){ [...listEl.children].forEach((r,i)=>r.querySelector(".n").textContent=i+1); addBtn.hidden = listEl.children.length>=maxFn(); }
   addBtn.onclick=()=>{ row().querySelector("input").focus(); onChange(); };
   return {
     set(arr){ listEl.innerHTML=""; (arr||[]).forEach(v=>row(v)); renum(); },
     get(){ return [...listEl.querySelectorAll("input")].map(i=>i.value.trim()).filter(Boolean); },
     filled(){ return [...listEl.querySelectorAll("input")].length; }
   };
+}
+
+/* ================= personalized invite (?c=...) ================= */
+const juntar = a => a.length<=1 ? (a[0]||"") : a.slice(0,-1).join(", ")+" e "+a[a.length-1];
+function encInv(nomes,max){
+  const j=JSON.stringify({n:nomes,m:max});
+  return btoa(unescape(encodeURIComponent(j))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+const INV=(()=>{ try{
+  const c=new URLSearchParams(location.search).get("c"); if(!c) return null;
+  const j=JSON.parse(decodeURIComponent(escape(atob(c.replace(/-/g,"+").replace(/_/g,"/")))));
+  const nomes=(Array.isArray(j.n)?j.n:[]).map(x=>String(x).trim().slice(0,80)).filter(Boolean).slice(0,15);
+  if(!nomes.length) return null;
+  return { nomes, max: Math.max(1, Math.min(15, parseInt(j.m,10) || nomes.length)) };
+}catch(e){ return null; } })();
+if(INV){
+  const txt=juntar(INV.nomes);
+  $("#paraIntroNames").textContent=txt; $("#paraIntro").hidden=false;
+  $("#paraCardNames").textContent=txt;
+  const ac=INV.max-1;
+  $("#paraCardMax").textContent = ac===0 ? "Convite individual" : `Você e mais ${ac} ${ac>1?"acompanhantes":"acompanhante"}`;
+  $("#paraCard").hidden=false;
+  document.title=`Convite para ${txt} · 15 anos da Talita`;
 }
 
 /* ================= routing ================= */
@@ -413,11 +479,21 @@ $("#goForm").onclick=()=>show("vForm");
 $("#backCard").onclick=()=>show("vCard");
 $("#doneBack").onclick=()=>show("vCard");
 $("#fTel").addEventListener("input",e=>e.target.value=maskTel(e.target.value));
-const gComp=compWidget($("#compList"),$("#addComp"),updCount);
+const gComp=compWidget($("#compList"),$("#addComp"),updCount,()=> INV ? INV.max-1 : 15);
+function prefill(){
+  if(!INV) return;
+  $("#fNome").value=INV.nomes[0];
+  gComp.set(INV.nomes.slice(1, INV.max));
+  const n=INV.max;
+  $("#limitNote").textContent = n===1 ? "Este convite é individual." : `Seu convite permite até ${n-1} ${n-1>1?"acompanhantes":"acompanhante"}.`;
+  $("#limitNote").hidden=false;
+  if(n===1){ $("#addComp").hidden=true; }
+}
+prefill();
 function status(){ return document.querySelector('input[name="st"]:checked').value; }
 function updCount(){
   const vai=status()==="confirmado";
-  $("#compBox").hidden=!vai;
+  $("#compBox").hidden=!vai || (INV && INV.max===1);
   const n=1+gComp.get().length;
   $("#countLine").innerHTML = vai ? `Total: <b>${n} ${n===1?"pessoa":"pessoas"}</b> contando com você` : "Sentiremos sua falta! Se quiser, deixe um recado.";
   $("#btnSend").textContent = vai ? "CONFIRMAR PRESENÇA" : "ENVIAR RESPOSTA";
@@ -432,6 +508,7 @@ $("#rsvp").addEventListener("submit", async e=>{
   if(nome.length<3){ err.textContent="Escreva seu nome completo para a gente saber quem é você."; err.hidden=false; $("#fNome").focus(); return; }
   if(tel && tel.replace(/\D/g,"").length<10){ err.textContent="O WhatsApp parece incompleto. Use DDD + número, ou deixe em branco."; err.hidden=false; return; }
   const st=status(), comp=st==="confirmado"?gComp.get():[];
+  if(INV && 1+comp.length>INV.max){ err.textContent=`Seu convite permite até ${INV.max-1} acompanhantes. Remova algum nome para continuar.`; err.hidden=false; return; }
   const btn=$("#btnSend"); btn.disabled=true; btn.textContent="ENVIANDO…";
   const { error } = await sb.rpc("talita_confirmar",{ p_nome:nome, p_telefone:tel, p_status:st, p_acompanhantes:comp, p_recado:$("#fRec").value });
   btn.disabled=false; updCount();
@@ -448,7 +525,7 @@ $("#rsvp").addEventListener("submit", async e=>{
     $("#doneText").innerHTML=`Vamos sentir sua falta, <b>${esc(primeiro)}</b>. ${$("#fRec").value.trim()?"Seu recado vai chegar até a Talita.":""}`;
     $("#doneTicket").innerHTML=`<span class="muted">Se mudar de ideia, é só enviar de novo pelo convite.</span>`;
   }
-  $("#rsvp").reset(); gComp.set([]); updCount();
+  $("#rsvp").reset(); gComp.set([]); prefill(); updCount();
   show("vDone");
 });
 
@@ -560,6 +637,42 @@ $("#eDel").onclick=async ()=>{
   if(error){ $("#eErr").textContent="Não foi possível excluir agora."; $("#eErr").hidden=false; return; }
   closeEdit(); await load(true); toast("Cadastro excluído");
 };
+
+/* ---------- personalized invite generator ---------- */
+$("#iTel").addEventListener("input",e=>e.target.value=maskTel(e.target.value));
+let iAc=0;
+function setAc(n){ iAc=Math.max(0,Math.min(10,n)); $("#iAcomp").textContent=iAc;
+  const nome=$("#iNome").value.trim()||"O convidado";
+  $("#iResumo").textContent = iAc===0 ? `${nome} vai sozinho(a): convite individual.` : `${nome} + ${iAc} ${iAc>1?"acompanhantes":"acompanhante"} = até ${iAc+1} pessoas.`; }
+function openInv(){ $("#invForm").reset(); setAc(0); $("#iOut").hidden=true; $("#iErr").hidden=true; $("#invModal").hidden=false; document.body.style.overflow="hidden"; $("#iNome").focus(); }
+function closeInv(){ $("#invModal").hidden=true; document.body.style.overflow=""; }
+$("#btnInvite").onclick=openInv;
+$("#iClose").onclick=closeInv;
+$("#iMenos").onclick=()=>setAc(iAc-1);
+$("#iMais").onclick=()=>setAc(iAc+1);
+$("#iNome").addEventListener("input",()=>setAc(iAc));
+$("#invModal").addEventListener("click",e=>{ if(e.target.id==="invModal") closeInv(); });
+$("#invForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const err=$("#iErr"); err.hidden=true;
+  const nome=$("#iNome").value.trim().replace(/\s+/g," ");
+  const tel=$("#iTel").value.replace(/\D/g,"");
+  if(nome.length<2){ err.textContent="Escreva o nome do convidado."; err.hidden=false; $("#iNome").focus(); return; }
+  if(tel.length<10){ err.textContent="Coloque o WhatsApp com DDD, por exemplo (27) 99999-9999."; err.hidden=false; $("#iTel").focus(); return; }
+  const link=location.origin+location.pathname+"?c="+encInv([nome],iAc+1);
+  const lugares = iAc===0 ? "" : `\n\nSeu convite é válido para você e mais ${iAc} ${iAc>1?"acompanhantes":"acompanhante"}.`;
+  const msg=`Olá, ${nome}!\n\nVocê faz parte da minha história de um jeito muito especial, e seria um presente lindo ter você comigo nessa noite.\n\n*Meus 15 anos – Talita*\n16 de janeiro, às 19h30\nCerimonial Tindolelê\nPraia de Itaparica, Vila Velha/ES${lugares}\n\nPreparei um convite especial para você. Abra com o som ligado e confirme sua presença:\n${link}\n\nCom carinho,\nTalita`;
+  const wa="https://wa.me/55"+tel+"?text="+encodeURIComponent(msg);
+  $("#iWa").href=wa;
+  $("#iOutTxt").textContent=`Convite de ${nome} pronto (${iAc+1} ${iAc?"pessoas":"pessoa"}). Se o WhatsApp não abriu, toque no botão abaixo.`;
+  $("#iCopy").onclick=async ()=>{
+    try{ await navigator.clipboard.writeText(msg); toast("Mensagem copiada!"); }
+    catch(_){ const ta=document.createElement("textarea"); ta.value=msg; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy"); toast("Mensagem copiada!");}catch(__){toast("Não foi possível copiar");} ta.remove(); }
+  };
+  $("#iOut").hidden=false;
+  window.open(wa,"_blank");
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !$("#invModal").hidden) closeInv(); });
 
 /* ---------- copy list ---------- */
 $("#btnCopy").onclick=async ()=>{

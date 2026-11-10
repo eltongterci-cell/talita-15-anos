@@ -132,31 +132,57 @@ textarea.inp{min-height:90px;resize:vertical}
 .ticket ul{margin:4px 0 0;padding-left:20px}
 
 /* ---------- organizer panel ---------- */
-.panel-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.panel-top h1{font-family:var(--f-caps);font-size:18px;letter-spacing:.18em;margin:0;font-weight:600}
-.panel-top small{display:block;font-family:var(--f-body);letter-spacing:0;font-style:italic;color:var(--plum-soft);font-size:15px;font-weight:400}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
-.stat{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.stat .v{font-family:var(--f-caps);font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
-.stat .k{font-size:15px;color:var(--plum-soft);font-style:italic}
-.stat.hero{grid-column:1/-1;background:var(--plum);color:#fff6e6;border-color:var(--plum);display:flex;align-items:baseline;gap:12px}
-.stat.hero .v{font-size:44px;color:var(--gold-lt)}
-.stat.hero .k{color:#ecd9e6}
-.tools{display:grid;gap:10px;margin-bottom:12px}
+#admin.wrap{max-width:640px;display:grid;gap:14px}
+.dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:4px 2px 2px}
+.dash-head .eyebrow{font-family:var(--f-caps);letter-spacing:.28em;font-size:11px;color:var(--gold)}
+.dash-head h1{font-family:var(--f-script);font-weight:400;font-size:44px;line-height:1.05;margin:2px 0 0;color:var(--plum)}
+.dash-head p{margin:2px 0 0;font-style:italic;color:var(--plum-soft);font-size:16px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:12px;box-shadow:0 14px 30px -26px rgba(74,25,66,.6)}
+.panel-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.panel-t{font-family:var(--f-caps);font-size:13px;letter-spacing:.22em;font-weight:600;margin:0;color:var(--plum)}
+.panel-row small{font-style:italic;color:var(--plum-soft);font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;min-width:0}
+.stat .v{font-family:var(--f-caps);font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--plum)}
+.stat .k{font-size:15px;color:var(--plum-soft);font-style:italic;line-height:1.3}
+.stat.hero{grid-column:1/-1;background:var(--plum);border-color:var(--plum);display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 14px}
+.stat.hero .v{font-size:48px;color:var(--gold-lt);grid-row:span 2}
+.stat.hero .k{color:#fff3e6;font-style:normal;font-family:var(--f-caps);font-size:13px;letter-spacing:.14em}
+.stat.hero small{color:#e4cfe0;font-style:italic;font-size:15px}
+.stat-note{grid-column:1/-1;margin:0;font-size:14px;font-style:italic;color:#8a6414;background:#fbf0d9;border-radius:10px;padding:8px 12px}
+.acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.act{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;color:var(--plum);min-width:0}
+.act:hover{border-color:var(--gold)}
+.act svg{grid-row:span 2;width:22px;height:22px;color:var(--gold)}
+.act b{font-family:var(--f-caps);font-size:12.5px;letter-spacing:.08em;font-weight:600;line-height:1.2}
+.act span{font-size:14px;font-style:italic;color:var(--plum-soft);line-height:1.25}
+.act.primary{grid-column:1/-1;background:var(--plum);border-color:var(--plum);color:#fff6e6}
+.act.primary svg{color:var(--gold-lt)} .act.primary span{color:#e4cfe0}
+.act[disabled]{opacity:.6;cursor:progress}
 .tabs{display:flex;gap:6px;flex-wrap:wrap}
-.tab{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:16px}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;font-size:16px;color:var(--plum)}
 .tab[aria-pressed="true"]{background:var(--plum);color:#fff;border-color:var(--plum)}
-.list{display:grid;gap:8px}
-.item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;cursor:pointer;text-align:left;width:100%}
+.list{display:grid;gap:10px}
+.item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px;cursor:pointer;text-align:left;width:100%;color:var(--plum)}
 .item:hover{border-color:var(--gold)}
-.item .nm{font-weight:600;font-size:19px;min-width:0;overflow-wrap:anywhere}
-.item .sub{grid-column:1/-1;font-size:15px;color:var(--plum-soft);min-width:0;overflow-wrap:anywhere}
-.pill{font-family:var(--f-caps);font-size:11px;letter-spacing:.1em;padding:4px 10px;border-radius:999px;align-self:start;white-space:nowrap}
+.item.off{background:#fbf7f8}
+.item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.item .nm{font-weight:600;font-size:19px;line-height:1.25;min-width:0;overflow-wrap:anywhere}
+.pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.ppl{list-style:none;margin:0;padding:0;display:grid;border-top:1px solid #f0e4ea}
+.ppl li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #f0e4ea;font-size:17px}
+.ppl li span{min-width:0;overflow-wrap:anywhere}
+.ppl li em{font-style:normal;font-size:15px;color:var(--plum-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tag{font-family:var(--f-caps);font-size:10px;letter-spacing:.1em;padding:2px 7px;border-radius:999px;background:#eef0fb;color:#4a4f8a;margin-left:6px}
+.tag.miss{background:#fbf0d9;color:#8a6414}
+.meta{font-size:14.5px;color:var(--plum-soft);overflow-wrap:anywhere}
+.quote{font-style:italic;font-size:15.5px;color:var(--plum-soft);border-left:2px solid var(--gold);padding-left:10px}
+.pill{font-family:var(--f-caps);font-size:11px;letter-spacing:.1em;padding:4px 10px;border-radius:999px;white-space:nowrap}
 .pill.ok{background:#e4f0e7;color:var(--ok)}
 .pill.no{background:#f6e3e1;color:var(--no)}
-.pill.dup{background:#fbf0d9;color:#8a6414;margin-left:6px}
-.empty{text-align:center;padding:30px 16px;color:var(--plum-soft);font-style:italic;border:1px dashed var(--line);border-radius:12px;background:var(--paper)}
-.fab-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pill.dup{background:#fbf0d9;color:#8a6414}
+.empty{text-align:center;padding:26px 16px;color:var(--plum-soft);font-style:italic;border:1px dashed var(--line);border-radius:12px;background:#fff}
 
 /* modal sheet */
 .modal{position:fixed;inset:0;background:rgba(43,16,48,.55);z-index:60;display:grid;align-items:end;justify-items:center;overflow-y:auto;padding-top:40px}
@@ -184,12 +210,19 @@ textarea.inp{min-height:90px;resize:vertical}
 .rep h3{font-family:var(--f-caps);font-size:12.5px;letter-spacing:.22em;color:var(--plum);margin:22px 0 8px;display:flex;align-items:center;gap:10px}
 .rep h3::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
 .rep table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-.rep th{font-family:var(--f-caps);font-size:9.5px;letter-spacing:.14em;text-align:left;color:#7a5c74;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--gold)}
-.rep td{padding:7px 8px;border-bottom:1px solid #f0e4ea;vertical-align:top}
-.rep tr:nth-child(even) td{background:#fcf8fa}
+.rep th{font-family:var(--f-caps);font-size:9.5px;letter-spacing:.14em;text-align:left;color:#7a5c74;font-weight:600;padding:7px 8px;border-bottom:1.5px solid var(--gold)}
+.rep td{padding:8px 8px;border-bottom:1px solid #eadde5;vertical-align:middle}
+.rep tr{page-break-inside:avoid}
+.rep tbody tr:nth-child(even) td{background:#fbf7f9}
 .rep td.num,.rep th.num{text-align:center}
-.rep td .acc{color:#6b4c66;font-size:12.5px}
-.rep .box{display:inline-block;width:13px;height:13px;border:1.2px solid #8b6a85;border-radius:3px}
+.rep td.ck,.rep th.ck{width:34px;text-align:center}
+.rep td.nm{font-size:14.5px;font-weight:600;color:#3b1636}
+.rep td.sm{font-size:12px;color:#6b4c66}
+.rep .box{display:inline-block;width:16px;height:16px;border:1.4px solid #8b6a85;border-radius:3px;vertical-align:middle}
+.rep .kid{font-family:var(--f-caps);font-size:9px;letter-spacing:.1em;color:#4a4f8a;background:#eef0fb;border-radius:999px;padding:2px 7px;white-space:nowrap}
+.rep .adl{font-family:var(--f-caps);font-size:9px;letter-spacing:.1em;color:#6b4c66;white-space:nowrap}
+.rep .hint{font-size:11.5px;color:#7a5c74;font-style:italic;margin:-2px 0 8px}
+.rep .letter td{background:#f4ecf1 !important;font-family:var(--f-caps);font-size:10px;letter-spacing:.2em;color:var(--gold);padding:4px 8px;border-bottom:1px solid #e3d3dc}
 .rep .rec{border-left:2px solid var(--gold);padding:4px 0 4px 12px;margin:0 0 10px;page-break-inside:avoid}
 .rep .rec i{display:block}
 .rep .rec small{color:#7a5c74}
@@ -312,31 +345,52 @@ textarea.inp{min-height:90px;resize:vertical}
     </div>
   </section>
 
-  <section id="aDash" hidden>
-    <div class="panel-top">
-      <h1>CONFIRMAÇÕES<small>15 anos da Talita · 16 de janeiro</small></h1>
+  <section id="aDash" hidden style="display:grid;gap:14px">
+    <header class="dash-head">
+      <div>
+        <div class="eyebrow">PAINEL DO ORGANIZADOR</div>
+        <h1>15 anos da Talita</h1>
+        <p>16 de janeiro · 19h30 · Cerimonial Tindolelê</p>
+      </div>
       <button class="icon-btn" id="btnReload" aria-label="Atualizar lista" title="Atualizar">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg></button>
-    </div>
-    <div class="stats" id="stats"></div>
-    <div class="tools">
+    </header>
+
+    <section class="panel" aria-labelledby="tResumo">
+      <h2 class="panel-t" id="tResumo">RESUMO</h2>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="tAcoes">
+      <h2 class="panel-t" id="tAcoes">AÇÕES</h2>
+      <div class="acts">
+        <button class="act primary" id="btnInvite" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+          <b>ENVIAR CONVITE PERSONALIZADO</b><span>Com o nome e o limite de acompanhantes, direto no WhatsApp</span></button>
+        <button class="act" id="btnPdf" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13l2 2 4-4"/></svg>
+          <b>LISTA DE ENTRADA</b><span>PDF para marcar quem chegou</span></button>
+        <button class="act" id="btnCopy" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h2"/></svg>
+          <b>COPIAR LISTA</b><span>Texto para o WhatsApp</span></button>
+        <button class="act" id="btnNew" type="button" style="grid-column:1/-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="8" r="4"/><path d="M3 20c0-3.5 3-6 7-6s7 2.5 7 6M19 8v6M16 11h6"/></svg>
+          <b>ADICIONAR MANUALMENTE</b><span>Para quem confirmou por mensagem ou ligação</span></button>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="tLista">
+      <div class="panel-row"><h2 class="panel-t" id="tLista">CONVIDADOS</h2><small id="listCount"></small></div>
       <input class="inp" id="search" type="search" placeholder="Buscar por nome ou telefone" aria-label="Buscar">
       <div class="tabs" role="group" aria-label="Filtro">
         <button class="tab" data-f="todos" aria-pressed="true">Todos</button>
         <button class="tab" data-f="confirmado" aria-pressed="false">Vão</button>
         <button class="tab" data-f="nao_vai" aria-pressed="false">Não vão</button>
+        <button class="tab" data-f="criancas" aria-pressed="false">Com crianças</button>
         <button class="tab" data-f="recado" aria-pressed="false">Com recado</button>
       </div>
-    </div>
-    <div class="list" id="list"></div>
-    <div class="fab-row">
-      <button class="btn primary" id="btnNew">+ ADICIONAR</button>
-      <button class="btn" id="btnPdf">EXPORTAR PDF</button>
-    </div>
-    <div class="fab-row" style="grid-template-columns:1fr">
-      <button class="btn primary" id="btnInvite">CRIAR CONVITE PERSONALIZADO</button>
-      <button class="btn ghost" id="btnCopy">COPIAR LISTA PARA O WHATSAPP</button>
-    </div>
+      <div class="list" id="list"></div>
+    </section>
   </section>
 </main>
 
@@ -607,36 +661,48 @@ function totals(){
   return { conf:vao.length, pessoas:vao.reduce((s,r)=>s+pessoas(r),0), nao:rows.filter(r=>r.status==="nao_vai").length,
            recados:rows.filter(r=>r.recado).length, acomp:vao.reduce((s,r)=>s+(r.acompanhantes||[]).length,0), ...faixas(rows) };
 }
+function grupo(r){ // titular + acompanhantes, já separados em nome e idade
+  return [r.nome, ...(r.status==="confirmado" ? (r.acompanhantes||[]) : [])].map(lerPessoa);
+}
+const idadeTxt = i => i==null ? "" : `${i} ${i===1?"ano":"anos"}`;
+const faixaTxt = i => i==null ? "" : i<=5 ? "Criança 0–5" : i<=12 ? "Criança 6–12" : "Adulto";
 function render(){
   const t=totals();
   $("#stats").innerHTML=`
-    <div class="stat hero"><span class="v">${t.pessoas}</span><span class="k">pessoas confirmadas para a festa</span></div>
-    <div class="stat"><div class="v">${t.adultos}</div><div class="k">adultos (13 anos ou mais)${t.sem?`<small>${t.sem} sem idade informada</small>`:""}</div></div>
-    <div class="stat"><div class="v">${t.c05+t.c612}</div><div class="k">crianças até 12 anos<small>0 a 5: ${t.c05} · 6 a 12: ${t.c612}</small></div></div>
-    <div class="stat"><div class="v">${t.conf}</div><div class="k">confirmações (${t.acomp} acompanhantes)</div></div>
-    <div class="stat"><div class="v">${t.nao}</div><div class="k">não poderão ir</div></div>`;
+    <div class="stat hero"><span class="v">${t.pessoas}</span><span class="k">PESSOAS CONFIRMADAS</span>
+      <small>${t.conf} ${t.conf===1?"confirmação":"confirmações"} · ${t.acomp} ${t.acomp===1?"acompanhante":"acompanhantes"}</small></div>
+    <div class="stat"><div class="v">${t.adultos}</div><div class="k">adultos<br>13 anos ou mais</div></div>
+    <div class="stat"><div class="v">${t.c612}</div><div class="k">crianças<br>de 6 a 12 anos</div></div>
+    <div class="stat"><div class="v">${t.c05}</div><div class="k">crianças<br>de 0 a 5 anos</div></div>
+    <div class="stat"><div class="v">${t.nao}</div><div class="k">não poderão<br>comparecer</div></div>
+    ${t.sem?`<p class="stat-note">${t.sem} ${t.sem===1?"pessoa está":"pessoas estão"} sem idade informada. Toque no cadastro para completar.</p>`:""}`;
   const q=$("#search").value.trim().toLowerCase(), qd=q.replace(/\D/g,"");
   const dup=dupSet();
   const list=rows.filter(r=>{
     if(filter==="confirmado"||filter==="nao_vai"){ if(r.status!==filter) return false; }
     if(filter==="recado" && !r.recado) return false;
+    if(filter==="criancas" && !grupo(r).some(p=>p.idade!=null && p.idade<=12)) return false;
     if(!q) return true;
     const hay=(r.nome+" "+(r.acompanhantes||[]).join(" ")).toLowerCase();
     return hay.includes(q) || (qd && (r.telefone||"").replace(/\D/g,"").includes(qd));
   }).slice().sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR"));
+  $("#listCount").textContent = rows.length ? `${list.length} de ${rows.length} ${rows.length===1?"cadastro":"cadastros"}` : "";
   const L=$("#list");
-  if(!rows.length){ L.innerHTML=`<div class="empty">Nenhuma confirmação ainda.<br>Quando os convidados responderem pelo link, eles aparecem aqui. Você também pode tocar em <b>+ Adicionar</b>.</div>`; return; }
+  if(!rows.length){ L.innerHTML=`<div class="empty">Nenhuma confirmação ainda.<br>Quando os convidados responderem, eles aparecem aqui.</div>`; return; }
   if(!list.length){ L.innerHTML=`<div class="empty">Nada encontrado com esse filtro.</div>`; return; }
   L.innerHTML="";
   list.forEach(r=>{
-    const b=document.createElement("button"); b.className="item"; b.type="button";
+    const b=document.createElement("button"); b.type="button";
+    const vai=r.status==="confirmado";
+    b.className="item"+(vai?"":" off");
     const k=(r.telefone||"").replace(/\D/g,"");
-    const acc=(r.acompanhantes||[]);
-    const tp=lerPessoa(r.nome);
-    b.innerHTML=`<span class="nm">${esc(tp.nome)}${tp.idade!=null?` <small>${tp.idade} ${tp.idade===1?"ano":"anos"}</small>`:""}</span>
-      <span>${r.status==="confirmado"?`<span class="pill ok">${pessoas(r)} ${pessoas(r)>1?"PESSOAS":"PESSOA"}</span>`:`<span class="pill no">NÃO VAI</span>`}${dup.has(k)?`<span class="pill dup">REPETIDO?</span>`:""}</span>
-      <span class="sub">${acc.length?"Com: "+esc(acc.join(", "))+" · ":""}${esc(r.telefone||"sem telefone")} · ${fmtData(r.created_at)}${r.origem==="manual"?" · adicionado por você":""}</span>
-      ${r.recado?`<span class="sub" style="font-style:italic">“${esc(r.recado)}”</span>`:""}`;
+    const g=grupo(r), n=g.length;
+    const ppl = vai ? `<ul class="ppl">${g.map(p=>`<li><span>${esc(p.nome)}${p.idade!=null&&p.idade<=12?`<span class="tag">CRIANÇA</span>`:""}${p.idade==null?`<span class="tag miss">SEM IDADE</span>`:""}</span><em>${idadeTxt(p.idade)}</em></li>`).join("")}</ul>` : "";
+    b.innerHTML=`<div class="item-top"><span class="nm">${esc(g[0].nome)}</span>
+        <span class="pills">${vai?`<span class="pill ok">${n} ${n>1?"PESSOAS":"PESSOA"}</span>`:`<span class="pill no">NÃO VAI</span>`}${dup.has(k)?`<span class="pill dup">REPETIDO?</span>`:""}</span></div>
+      ${ppl}
+      <div class="meta">${esc(r.telefone||"Sem telefone")} · ${vai?"confirmou":"respondeu"} em ${fmtData(r.created_at)}${r.origem==="manual"?" · adicionado por você":""}</div>
+      ${r.recado?`<div class="quote">“${esc(r.recado)}”</div>`:""}`;
     b.onclick=()=>openEdit(r);
     L.appendChild(b);
   });
@@ -736,14 +802,29 @@ $("#btnCopy").onclick=async ()=>{
 /* ---------- PDF report ---------- */
 function buildReport(){
   const t=totals();
-  const vao=rows.filter(r=>r.status==="confirmado").sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR"));
+  const vao=rows.filter(r=>r.status==="confirmado");
   const nao=rows.filter(r=>r.status==="nao_vai").sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR"));
   const rec=rows.filter(r=>r.recado).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
   const agora=new Date().toLocaleString("pt-BR",{day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
+  // uma linha por pessoa, em ordem alfabética
+  const todas=[];
+  vao.forEach(r=>{
+    const g=grupo(r), tit=g[0].nome;
+    g.forEach((p,i)=>todas.push({ ...p, de: i===0 ? "Titular" : tit, tel: i===0 ? (r.telefone||"") : "" }));
+  });
+  todas.sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR",{sensitivity:"base"}));
+  let letra="", linhas="", n=0;
+  todas.forEach(p=>{
+    const L0=(p.nome[0]||"#").toLocaleUpperCase("pt-BR").normalize("NFD").replace(/[̀-ͯ]/g,"");
+    if(L0!==letra){ letra=L0; linhas+=`<tr class="letter"><td colspan="6">${esc(letra)}</td></tr>`; }
+    n++;
+    const fx = p.idade==null ? `<span class="adl">—</span>` : p.idade<=12 ? `<span class="kid">${p.idade<=5?"CRIANÇA 0–5":"CRIANÇA 6–12"}</span>` : `<span class="adl">ADULTO</span>`;
+    linhas+=`<tr><td class="ck"><span class="box"></span></td><td class="num sm">${n}</td><td class="nm">${esc(p.nome)}</td><td class="num">${p.idade==null?"—":p.idade}</td><td>${fx}</td><td class="sm">${p.de==="Titular"?`Titular${p.tel?` · ${esc(p.tel)}`:""}`:`Convidado(a) de ${esc(p.de)}`}</td></tr>`;
+  });
   return `<div class="rep">
     <div class="rep-head">
       <svg class="crown" width="56" height="30" viewBox="0 0 64 34" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#b0832f" stroke-width="1.6" stroke-linejoin="round"><path d="M6 28 3 10l13 10 8-15 8 15 8-15 8 15 13-10-3 18Z"/><path d="M6 31h52"/><circle cx="32" cy="3" r="2" fill="#b0832f"/><circle cx="3" cy="9" r="1.6" fill="#b0832f"/><circle cx="61" cy="9" r="1.6" fill="#b0832f"/></g></svg>
-      <div class="ttl"><div class="caps">LISTA DE PRESENÇA · MEUS 15 ANOS</div><div class="nm">Talita</div></div>
+      <div class="ttl"><div class="caps">LISTA DE ENTRADA · MEUS 15 ANOS</div><div class="nm">Talita</div></div>
       <div class="meta"><b>16 DE JANEIRO · 19H30</b><br>Cerimonial Tindolelê<br>Av. Saturnino Rangel Mauro, 621<br>Praia de Itaparica · Vila Velha/ES</div>
     </div>
     <div class="rep-sum">
@@ -753,37 +834,33 @@ function buildReport(){
       <div><div class="v">${t.c05}</div><div class="k">crianças de 0 a 5</div></div>
       <div><div class="v">${t.nao}</div><div class="k">não poderão ir</div></div>
     </div>
-    <div style="font-size:11.5px;color:#7a5c74;font-style:italic">${t.conf} confirmações · ${t.acomp} acompanhantes${t.sem?` · ${t.sem} pessoas sem idade informada`:""}
-    </div>
-    <h3>CONFIRMADOS</h3>
-    ${vao.length?`<table><thead><tr><th class="num">Nº</th><th>Convidado</th><th>Acompanhantes</th><th class="num">Pessoas</th><th>Telefone</th><th class="num">Chegou</th></tr></thead><tbody>
-      ${vao.map((r,i)=>`<tr><td class="num">${i+1}</td><td><b>${esc(r.nome)}</b></td><td class="acc">${(r.acompanhantes||[]).map(esc).join("<br>")||"—"}</td><td class="num">${pessoas(r)}</td><td>${esc(r.telefone||"—")}</td><td class="num"><span class="box"></span></td></tr>`).join("")}
-      <tr><td></td><td colspan="2" style="text-align:right;font-family:var(--f-caps);font-size:10px;letter-spacing:.14em">TOTAL DE PESSOAS</td><td class="num"><b>${t.pessoas}</b></td><td colspan="2"></td></tr>
-      </tbody></table>`:`<p class="muted"><i>Nenhuma confirmação até agora.</i></p>`}
-    ${nao.length?`<h3>NÃO PODERÃO COMPARECER</h3><table><thead><tr><th class="num">Nº</th><th>Nome</th><th>Telefone</th><th>Respondeu em</th></tr></thead><tbody>
-      ${nao.map((r,i)=>`<tr><td class="num">${i+1}</td><td>${esc(r.nome)}</td><td>${esc(r.telefone||"—")}</td><td>${fmtData(r.created_at)}</td></tr>`).join("")}</tbody></table>`:""}
-    ${rec.length?`<h3>RECADOS PARA A TALITA</h3>${rec.map(r=>`<p class="rec"><i>“${esc(r.recado)}”</i><small>— ${esc(r.nome)}</small></p>`).join("")}`:""}
+    <h3>TODAS AS PESSOAS CONFIRMADAS · ${todas.length}</h3>
+    <p class="hint">Em ordem alfabética. Marque o quadrado quando a pessoa chegar.${t.sem?` ${t.sem} ${t.sem===1?"pessoa":"pessoas"} sem idade informada (—).`:""}</p>
+    ${todas.length?`<table><thead><tr><th class="ck">✓</th><th class="num">Nº</th><th>Nome completo</th><th class="num">Idade</th><th>Faixa</th><th>Convite</th></tr></thead><tbody>${linhas}</tbody></table>`:`<p class="hint">Nenhuma confirmação até agora.</p>`}
+    ${nao.length?`<h3>NÃO PODERÃO COMPARECER · ${nao.length}</h3><table><thead><tr><th class="num">Nº</th><th>Nome</th><th>Telefone</th><th>Respondeu em</th></tr></thead><tbody>
+      ${nao.map((r,i)=>`<tr><td class="num sm">${i+1}</td><td>${esc(lerPessoa(r.nome).nome)}</td><td class="sm">${esc(r.telefone||"—")}</td><td class="sm">${fmtData(r.created_at)}</td></tr>`).join("")}</tbody></table>`:""}
+    ${rec.length?`<h3>RECADOS PARA A TALITA</h3>${rec.map(r=>`<p class="rec"><i>“${esc(r.recado)}”</i><small>— ${esc(lerPessoa(r.nome).nome)}</small></p>`).join("")}`:""}
     <div class="rep-foot"><span>“Este é o dia que o Senhor fez” · Salmo 118:24</span><span>Gerado em ${agora}</span></div>
   </div>`;
 }
 $("#btnPdf").onclick=async ()=>{
-  const btn=$("#btnPdf"); btn.disabled=true; btn.textContent="GERANDO…";
+  const btn=$("#btnPdf"), lab=btn.querySelector("b"); btn.disabled=true; lab.textContent="GERANDO PDF…";
   try{
     await document.fonts.ready;
     const host=$("#report-host"); host.innerHTML=buildReport();
-    const opt={ margin:[6,0,8,0], filename:"Lista de presença - 15 anos Talita.pdf", image:{type:"jpeg",quality:.96},
+    const opt={ margin:[6,0,8,0], filename:"Lista de entrada - 15 anos Talita.pdf", image:{type:"jpeg",quality:.96},
       html2canvas:{scale:2,useCORS:true,backgroundColor:"#ffffff"}, jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
       pagebreak:{mode:["css","legacy"],avoid:["tr",".rec",".rep-sum",".rep-head"]} };
     const worker=html2pdf().set(opt).from(host.firstElementChild);
     const blob=await worker.outputPdf("blob");
     const file=new File([blob],opt.filename,{type:"application/pdf"});
     if(navigator.canShare && navigator.canShare({files:[file]})){
-      try{ await navigator.share({files:[file],title:"Lista de presença · 15 anos da Talita"}); }
+      try{ await navigator.share({files:[file],title:"Lista de entrada · 15 anos da Talita"}); }
       catch(e){ if(e.name!=="AbortError") await worker.save(); }
     } else { await worker.save(); }
     host.innerHTML="";
   }catch(e){ toast("Não foi possível gerar o PDF agora"); }
-  btn.disabled=false; btn.textContent="EXPORTAR PDF";
+  btn.disabled=false; lab.textContent="LISTA DE ENTRADA";
 };
 
 route();

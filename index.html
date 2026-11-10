@@ -111,7 +111,11 @@ textarea.inp{min-height:90px;resize:vertical}
 .seg input:checked+label{border-color:var(--plum);background:#f7eef5;box-shadow:inset 0 0 0 1px var(--plum)}
 .seg input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
 .comp{display:grid;gap:8px}
-.comp-row{display:grid;grid-template-columns:28px 1fr 40px;gap:8px;align-items:center}
+.comp-row{display:grid;grid-template-columns:18px minmax(0,1fr) 66px 40px;gap:6px;align-items:center}
+.inp.age{text-align:center;padding-inline:6px}
+.name-age{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:8px;align-items:end}
+.nm small{font-weight:400;font-size:15px;color:var(--plum-soft);font-style:italic}
+.stat .k small{display:block;font-size:13px}
 .comp-row .n{font-family:var(--f-caps);font-size:13px;color:var(--gold);text-align:center}
 .icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--plum-soft)}
 .add{justify-self:start;background:none;border:1px dashed var(--gold);border-radius:999px;padding:9px 16px;cursor:pointer;color:var(--plum);font-size:16px}
@@ -171,7 +175,7 @@ textarea.inp{min-height:90px;resize:vertical}
 .rep-head .ttl .nm{font-family:var(--f-script);font-size:46px;line-height:1;color:var(--plum)}
 .rep-head .meta{text-align:right;font-size:12.5px;color:#6b4c66;line-height:1.5}
 .rep-head .meta b{font-family:var(--f-caps);font-size:11px;letter-spacing:.12em;color:var(--plum)}
-.rep-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 6px}
+.rep-sum{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 6px}
 .rep-sum > div{border:1px solid #e8d9e2;border-radius:8px;padding:10px 12px}
 .rep-sum .v{font-family:var(--f-caps);font-size:24px;color:var(--plum);font-variant-numeric:tabular-nums}
 .rep-sum .k{font-size:11.5px;color:#7a5c74;font-style:italic}
@@ -248,10 +252,14 @@ textarea.inp{min-height:90px;resize:vertical}
         <p>16 de janeiro · 19h30 · Cerimonial Tindolelê</p>
       </div>
       <form id="rsvp" novalidate>
-        <label class="f"><span class="lbl">SEU NOME COMPLETO</span>
-          <input class="inp" id="fNome" autocomplete="name" required maxlength="120" placeholder="Ex.: Maria da Silva"></label>
+        <div class="name-age">
+          <label class="f"><span class="lbl">SEU NOME COMPLETO</span>
+            <input class="inp" id="fNome" autocomplete="name" required maxlength="100" placeholder="Ex.: Maria da Silva"></label>
+          <label class="f"><span class="lbl">IDADE</span>
+            <input class="inp age" id="fIdade" inputmode="numeric" maxlength="3" placeholder="Ex.: 30"></label>
+        </div>
         <label class="f"><span class="lbl">WHATSAPP</span>
-          <input class="inp" id="fTel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="(27) 99999-9999"></label>
+          <input class="inp" id="fTel" inputmode="tel" autocomplete="tel" maxlength="22" placeholder="(27) 99999-9999"></label>
         <div class="f" role="radiogroup" aria-label="Você vai?">
           <span class="lbl" style="margin-bottom:6px;display:block">VOCÊ VAI?</span>
           <div class="seg">
@@ -346,7 +354,7 @@ textarea.inp{min-height:90px;resize:vertical}
           <button type="button" class="icon-btn" id="iMais" aria-label="Mais">+</button></div>
         <p class="note" id="iResumo"></p></div>
       <label class="f"><span class="lbl">WHATSAPP DO CONVIDADO</span>
-        <input class="inp" id="iTel" inputmode="tel" maxlength="16" placeholder="(27) 99999-9999"></label>
+        <input class="inp" id="iTel" inputmode="tel" maxlength="22" placeholder="(27) 99999-9999"></label>
       <p class="err" id="iErr" hidden></p>
       <button class="btn primary" type="submit">ENVIAR CONVITE PELO WHATSAPP</button>
       <div id="iOut" hidden style="display:grid;gap:10px">
@@ -364,8 +372,11 @@ textarea.inp{min-height:90px;resize:vertical}
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <div class="sheet-head"><div class="caps" id="mCaps">EDITAR CADASTRO</div><h2 id="mTitle" style="font-size:40px">Convidado</h2></div>
     <form id="editForm" novalidate>
-      <label class="f"><span class="lbl">NOME</span><input class="inp" id="eNome" required maxlength="120"></label>
-      <label class="f"><span class="lbl">TELEFONE</span><input class="inp" id="eTel" inputmode="tel" maxlength="16"></label>
+      <div class="name-age">
+        <label class="f"><span class="lbl">NOME</span><input class="inp" id="eNome" required maxlength="100"></label>
+        <label class="f"><span class="lbl">IDADE</span><input class="inp age" id="eIdade" inputmode="numeric" maxlength="3"></label>
+      </div>
+      <label class="f"><span class="lbl">TELEFONE</span><input class="inp" id="eTel" inputmode="tel" maxlength="22"></label>
       <div class="f"><span class="lbl" style="margin-bottom:6px;display:block">SITUAÇÃO</span>
         <div class="seg">
           <input type="radio" name="est" id="eSim" value="confirmado"><label for="eSim"><b>VAI</b><span>Confirmado</span></label>
@@ -397,9 +408,24 @@ const sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pessoas = r => r.status === "confirmado" ? 1 + (r.acompanhantes || []).length : 0;
+/* idade fica gravada junto do nome: "Dayana Alves (32 anos)" */
+const comIdade = (nome, idade) => (idade === "" || idade == null) ? nome : `${nome} (${idade} ${+idade === 1 ? "ano" : "anos"})`;
+function lerPessoa(str){ const t=String(str||"").trim(); const m=t.match(/^(.*?)\s*\((\d{1,3})\s*anos?\)$/); return m ? { nome:m[1].trim(), idade:+m[2] } : { nome:t, idade:null }; }
+const soDig = v => v.replace(/\D/g,"").slice(0,3);
+function idadeOk(v){ return /^\d{1,3}$/.test(v) && +v <= 120; }
+function faixas(rs){
+  const f={ adultos:0, c612:0, c05:0, sem:0 };
+  rs.filter(r=>r.status==="confirmado").forEach(r=>{
+    [r.nome, ...(r.acompanhantes||[])].forEach(x=>{ const i=lerPessoa(x).idade;
+      if(i==null) f.sem++; else if(i<=5) f.c05++; else if(i<=12) f.c612++; else f.adultos++; });
+  });
+  return f;
+}
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,2600); }
 function maskTel(v){
-  const d=v.replace(/\D/g,"").slice(0,11);
+  let d=v.replace(/\D/g,"");
+  if(d.length>11 && d.startsWith("55")) d=d.slice(2);   // remove o +55 do preenchimento automático
+  d=d.slice(0,11);
   if(d.length<=2) return d.length?"("+d:"";
   if(d.length<=6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
   if(d.length<=10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
@@ -410,19 +436,24 @@ const fmtData = iso => new Date(iso).toLocaleString("pt-BR",{day:"2-digit",month
 /* ---------- companion list widget (shared by guest form and edit modal) ---------- */
 function compWidget(listEl, addBtn, onChange, maxFn=()=>15){
   function row(val=""){
+    const p=lerPessoa(val);
     const r=document.createElement("div"); r.className="comp-row";
-    r.innerHTML=`<span class="n"></span><input class="inp" maxlength="120" placeholder="Nome do acompanhante"><button type="button" class="icon-btn" aria-label="Remover">✕</button>`;
-    r.querySelector("input").value=val;
-    r.querySelector("input").addEventListener("input",onChange);
+    r.innerHTML=`<span class="n"></span><input class="inp nm-in" maxlength="100" placeholder="Nome do acompanhante" aria-label="Nome do acompanhante"><input class="inp age" inputmode="numeric" maxlength="3" placeholder="Idade" aria-label="Idade do acompanhante"><button type="button" class="icon-btn" aria-label="Remover">✕</button>`;
+    const [nIn,aIn]=r.querySelectorAll("input");
+    nIn.value=p.nome; aIn.value=p.idade??"";
+    nIn.addEventListener("input",onChange);
+    aIn.addEventListener("input",()=>{ aIn.value=soDig(aIn.value); onChange(); });
     r.querySelector("button").onclick=()=>{ r.remove(); renum(); onChange(); };
     listEl.appendChild(r); renum(); return r;
   }
   function renum(){ [...listEl.children].forEach((r,i)=>r.querySelector(".n").textContent=i+1); addBtn.hidden = listEl.children.length>=maxFn(); }
   addBtn.onclick=()=>{ row().querySelector("input").focus(); onChange(); };
+  const raw=()=>[...listEl.children].map(r=>{ const [n,a]=r.querySelectorAll("input"); return { nome:n.value.trim().replace(/\s+/g," "), idade:a.value.trim() }; });
   return {
     set(arr){ listEl.innerHTML=""; (arr||[]).forEach(v=>row(v)); renum(); },
-    get(){ return [...listEl.querySelectorAll("input")].map(i=>i.value.trim()).filter(Boolean); },
-    filled(){ return [...listEl.querySelectorAll("input")].length; }
+    raw,
+    get(){ return raw().filter(p=>p.nome).map(p=>comIdade(p.nome,p.idade)); },
+    filled(){ return listEl.children.length; }
   };
 }
 
@@ -479,6 +510,7 @@ $("#goForm").onclick=()=>show("vForm");
 $("#backCard").onclick=()=>show("vCard");
 $("#doneBack").onclick=()=>show("vCard");
 $("#fTel").addEventListener("input",e=>e.target.value=maskTel(e.target.value));
+$("#fIdade").addEventListener("input",e=>e.target.value=soDig(e.target.value));
 const gComp=compWidget($("#compList"),$("#addComp"),updCount,()=> INV ? INV.max-1 : 15);
 function prefill(){
   if(!INV) return;
@@ -508,9 +540,17 @@ $("#rsvp").addEventListener("submit", async e=>{
   if(nome.length<3){ err.textContent="Escreva seu nome completo para a gente saber quem é você."; err.hidden=false; $("#fNome").focus(); return; }
   if(tel && tel.replace(/\D/g,"").length<10){ err.textContent="O WhatsApp parece incompleto. Use DDD + número, ou deixe em branco."; err.hidden=false; return; }
   const st=status(), comp=st==="confirmado"?gComp.get():[];
+  const idade=$("#fIdade").value.trim();
+  if(st==="confirmado"){
+    if(!idadeOk(idade)){ err.textContent="Informe a sua idade."; err.hidden=false; $("#fIdade").focus(); return; }
+    const semNome=gComp.raw().find(p=>!p.nome && p.idade);
+    if(semNome){ err.textContent="Escreva o nome de todos os acompanhantes."; err.hidden=false; return; }
+    const semIdade=gComp.raw().find(p=>p.nome && !idadeOk(p.idade));
+    if(semIdade){ err.textContent=`Informe a idade de ${semIdade.nome}.`; err.hidden=false; return; }
+  }
   if(INV && 1+comp.length>INV.max){ err.textContent=`Seu convite permite até ${INV.max-1} acompanhantes. Remova algum nome para continuar.`; err.hidden=false; return; }
   const btn=$("#btnSend"); btn.disabled=true; btn.textContent="ENVIANDO…";
-  const { error } = await sb.rpc("talita_confirmar",{ p_nome:nome, p_telefone:tel, p_status:st, p_acompanhantes:comp, p_recado:$("#fRec").value });
+  const { error } = await sb.rpc("talita_confirmar",{ p_nome: st==="confirmado" ? comIdade(nome,idade) : nome, p_telefone:tel, p_status:st, p_acompanhantes:comp, p_recado:$("#fRec").value });
   btn.disabled=false; updCount();
   if(error){ err.textContent="Não conseguimos enviar agora. Verifique sua internet e tente de novo."; err.hidden=false; return; }
   const primeiro=nome.split(" ")[0];
@@ -518,7 +558,7 @@ $("#rsvp").addEventListener("submit", async e=>{
     $("#doneTitle").textContent="Presença confirmada!";
     $("#doneText").innerHTML=`Que alegria, <b>${esc(primeiro)}</b>! A Talita vai amar celebrar com você.`;
     $("#doneTicket").innerHTML=`<span class="lbl">SUA CONFIRMAÇÃO · ${1+comp.length} ${comp.length?"PESSOAS":"PESSOA"}</span>
-      <ul><li>${esc(nome)}</li>${comp.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      <ul><li>${esc(comIdade(nome,idade))}</li>${comp.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
       <span class="muted" style="font-size:15px;margin-top:6px">16 de janeiro, às 19h30 · Cerimonial Tindolelê</span>`;
   } else {
     $("#doneTitle").textContent="Obrigada por avisar";
@@ -565,12 +605,14 @@ function dupSet(){
 function totals(){
   const vao=rows.filter(r=>r.status==="confirmado");
   return { conf:vao.length, pessoas:vao.reduce((s,r)=>s+pessoas(r),0), nao:rows.filter(r=>r.status==="nao_vai").length,
-           recados:rows.filter(r=>r.recado).length, acomp:vao.reduce((s,r)=>s+(r.acompanhantes||[]).length,0) };
+           recados:rows.filter(r=>r.recado).length, acomp:vao.reduce((s,r)=>s+(r.acompanhantes||[]).length,0), ...faixas(rows) };
 }
 function render(){
   const t=totals();
   $("#stats").innerHTML=`
     <div class="stat hero"><span class="v">${t.pessoas}</span><span class="k">pessoas confirmadas para a festa</span></div>
+    <div class="stat"><div class="v">${t.adultos}</div><div class="k">adultos (13 anos ou mais)${t.sem?`<small>${t.sem} sem idade informada</small>`:""}</div></div>
+    <div class="stat"><div class="v">${t.c05+t.c612}</div><div class="k">crianças até 12 anos<small>0 a 5: ${t.c05} · 6 a 12: ${t.c612}</small></div></div>
     <div class="stat"><div class="v">${t.conf}</div><div class="k">confirmações (${t.acomp} acompanhantes)</div></div>
     <div class="stat"><div class="v">${t.nao}</div><div class="k">não poderão ir</div></div>`;
   const q=$("#search").value.trim().toLowerCase(), qd=q.replace(/\D/g,"");
@@ -590,7 +632,8 @@ function render(){
     const b=document.createElement("button"); b.className="item"; b.type="button";
     const k=(r.telefone||"").replace(/\D/g,"");
     const acc=(r.acompanhantes||[]);
-    b.innerHTML=`<span class="nm">${esc(r.nome)}</span>
+    const tp=lerPessoa(r.nome);
+    b.innerHTML=`<span class="nm">${esc(tp.nome)}${tp.idade!=null?` <small>${tp.idade} ${tp.idade===1?"ano":"anos"}</small>`:""}</span>
       <span>${r.status==="confirmado"?`<span class="pill ok">${pessoas(r)} ${pessoas(r)>1?"PESSOAS":"PESSOA"}</span>`:`<span class="pill no">NÃO VAI</span>`}${dup.has(k)?`<span class="pill dup">REPETIDO?</span>`:""}</span>
       <span class="sub">${acc.length?"Com: "+esc(acc.join(", "))+" · ":""}${esc(r.telefone||"sem telefone")} · ${fmtData(r.created_at)}${r.origem==="manual"?" · adicionado por você":""}</span>
       ${r.recado?`<span class="sub" style="font-style:italic">“${esc(r.recado)}”</span>`:""}`;
@@ -603,11 +646,13 @@ function render(){
 let editing=null;
 const eComp=compWidget($("#eComp"),$("#eAdd"),()=>{});
 $("#eTel").addEventListener("input",e=>e.target.value=maskTel(e.target.value));
+$("#eIdade").addEventListener("input",e=>e.target.value=soDig(e.target.value));
 function openEdit(r){
   editing=r||null;
   $("#mCaps").textContent=r?"EDITAR CADASTRO":"NOVO CADASTRO";
-  $("#mTitle").textContent=r?r.nome.split(" ")[0]:"Convidado";
-  $("#eNome").value=r?.nome||""; $("#eTel").value=r?.telefone||""; $("#eRec").value=r?.recado||"";
+  const tp=lerPessoa(r?.nome||"");
+  $("#mTitle").textContent=r?tp.nome.split(" ")[0]:"Convidado";
+  $("#eNome").value=tp.nome; $("#eIdade").value=tp.idade??""; $("#eTel").value=r?.telefone||""; $("#eRec").value=r?.recado||"";
   (r?.status==="nao_vai"?$("#eNao"):$("#eSim")).checked=true;
   eComp.set(r?.acompanhantes||[]);
   $("#eMeta").textContent=r?`Confirmou em ${fmtData(r.created_at)}${r.updated_at!==r.created_at?` · editado em ${fmtData(r.updated_at)}`:""}`:"";
@@ -621,10 +666,12 @@ $("#modal").addEventListener("click",e=>{ if(e.target.id==="modal") closeEdit();
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !$("#modal").hidden) closeEdit(); });
 $("#editForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const nome=$("#eNome").value.trim();
+  const nome=$("#eNome").value.trim().replace(/\s+/g," ");
   if(nome.length<2){ $("#eErr").textContent="Informe o nome do convidado."; $("#eErr").hidden=false; return; }
+  const eIdade=$("#eIdade").value.trim();
+  if(eIdade && !idadeOk(eIdade)){ $("#eErr").textContent="Confira a idade (número de 0 a 120)."; $("#eErr").hidden=false; return; }
   $("#eSave").disabled=true; $("#eSave").textContent="SALVANDO…";
-  const { error } = await sb.rpc("talita_admin_salvar",{ p_senha:PASS, p_id:editing?.id||null, p_nome:nome, p_telefone:$("#eTel").value,
+  const { error } = await sb.rpc("talita_admin_salvar",{ p_senha:PASS, p_id:editing?.id||null, p_nome:comIdade(nome,eIdade), p_telefone:$("#eTel").value,
     p_status:document.querySelector('input[name="est"]:checked').value, p_acompanhantes:eComp.get(), p_recado:$("#eRec").value });
   $("#eSave").disabled=false; $("#eSave").textContent="SALVAR";
   if(error){ $("#eErr").textContent="Não foi possível salvar. Verifique a conexão e tente de novo."; $("#eErr").hidden=false; return; }
@@ -679,7 +726,7 @@ $("#btnCopy").onclick=async ()=>{
   const t=totals();
   const vao=rows.filter(r=>r.status==="confirmado").sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR"));
   const nao=rows.filter(r=>r.status==="nao_vai");
-  let txt=`👑 *15 anos da Talita* — Lista de presença\n16/01 às 19h30 · Cerimonial Tindolelê\n\n✅ *${t.pessoas} pessoas confirmadas* (${t.conf} confirmações)\n\n`;
+  let txt=`👑 *15 anos da Talita* — Lista de presença\n16/01 às 19h30 · Cerimonial Tindolelê\n\n✅ *${t.pessoas} pessoas confirmadas* (${t.conf} confirmações)\nAdultos: ${t.adultos} · Crianças 6 a 12: ${t.c612} · Crianças 0 a 5: ${t.c05}${t.sem?` · Sem idade: ${t.sem}`:""}\n\n`;
   vao.forEach((r,i)=>{ txt+=`${i+1}. ${r.nome}${(r.acompanhantes||[]).length?` + ${r.acompanhantes.join(", ")}`:""} (${pessoas(r)})\n`; });
   if(nao.length){ txt+=`\n❌ *Não poderão ir (${nao.length})*\n`+nao.map(r=>`• ${r.nome}`).join("\n")+"\n"; }
   try{ await navigator.clipboard.writeText(txt); toast("Lista copiada! É só colar no WhatsApp"); }
@@ -701,9 +748,12 @@ function buildReport(){
     </div>
     <div class="rep-sum">
       <div class="main"><div class="v">${t.pessoas}</div><div class="k">pessoas confirmadas</div></div>
-      <div><div class="v">${t.conf}</div><div class="k">confirmações</div></div>
-      <div><div class="v">${t.acomp}</div><div class="k">acompanhantes</div></div>
+      <div><div class="v">${t.adultos}</div><div class="k">adultos (13+)</div></div>
+      <div><div class="v">${t.c612}</div><div class="k">crianças de 6 a 12</div></div>
+      <div><div class="v">${t.c05}</div><div class="k">crianças de 0 a 5</div></div>
       <div><div class="v">${t.nao}</div><div class="k">não poderão ir</div></div>
+    </div>
+    <div style="font-size:11.5px;color:#7a5c74;font-style:italic">${t.conf} confirmações · ${t.acomp} acompanhantes${t.sem?` · ${t.sem} pessoas sem idade informada`:""}
     </div>
     <h3>CONFIRMADOS</h3>
     ${vao.length?`<table><thead><tr><th class="num">Nº</th><th>Convidado</th><th>Acompanhantes</th><th class="num">Pessoas</th><th>Telefone</th><th class="num">Chegou</th></tr></thead><tbody>
